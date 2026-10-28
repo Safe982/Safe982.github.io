@@ -34,7 +34,7 @@ function route() {
     page.classList.remove('route-enter');
     requestAnimationFrame(() => page.classList.add('route-enter'));
   }
-  document.title = validName === 'home' ? 'Ayan Safe · My little corner of the internet' : `${validName[0].toUpperCase() + validName.slice(1)} · Ayan Safe`;
+  document.title = validName === 'home' ? 'Ayan Safe · Portfolio' : `${validName[0].toUpperCase() + validName.slice(1)} · Ayan Safe`;
   currentRoute = validName;
   if (isEducation) {
     requestAnimationFrame(() => document.querySelector('#education').scrollIntoView({ behavior: reducedMotion.matches ? 'instant' : 'smooth', block: 'start' }));
@@ -45,45 +45,45 @@ function route() {
 
 const carSlides = [
   {
-    src: 'assets/car-front.png', alt: 'Front-side view of my autonomous RC car with camera, LiDAR, Raspberry Pi, and steering hardware', file: 'hardware / front-view', caption: 'The hardware. Tap a marker to look a little closer.',
+    src: 'assets/car-front.png', alt: 'Front-side view of my autonomous RC car with camera, LiDAR, Raspberry Pi, and steering hardware', file: 'hardware / front-view', caption: 'Front hardware view. Select a marker for component details.',
     hotspots: [
-      { x: 34, y: 51, label: 'Front camera', title: 'A view of the road ahead.', text: 'The forward-facing camera supplies live video for image processing. Computer vision looks for obstacles and visual cues in the vehicle’s path.', category: '01 / CAMERA VISION', labelX: 25, labelY: 56 },
-      { x: 54, y: 22, label: 'LiDAR', title: 'Depth beyond the pixels.', text: 'The LiDAR measures how far surrounding objects are from the car. Its distance readings complement the cameras, adding spatial context around the sides and farther ahead.', category: '02 / DISTANCE SENSING', labelX: 67, labelY: 19 },
-      { x: 66, y: 36, label: 'Raspberry Pi', title: 'Where the inputs meet.', text: 'The Raspberry Pi runs the perception software and neural-network processing. Camera information and LiDAR measurements feed a shared picture of the surroundings to help select a maneuver.', category: '03 / ON-BOARD COMPUTING', labelX: 80, labelY: 39 },
-      { x: 65, y: 50, label: 'Steering + control', title: 'Turning a decision into motion.', text: 'The steering servo changes wheel angle while motor control changes speed. Together, they turn the software’s chosen response into physical movement.', category: '04 / ACTUATION', labelX: 77, labelY: 56 }
+      { x: 34, y: 51, label: 'Front camera', title: 'Front camera', text: 'The forward-facing camera supplies live video for image processing. Computer vision looks for obstacles and visual cues in the vehicle’s path.', category: '01 / CAMERA VISION', labelX: 25, labelY: 56 },
+      { x: 54, y: 22, label: 'LiDAR', title: 'LiDAR distance sensing', text: 'The LiDAR measures how far surrounding objects are from the car. Its distance readings complement the cameras, adding spatial context around the sides and farther ahead.', category: '02 / DISTANCE SENSING', labelX: 67, labelY: 19 },
+      { x: 66, y: 36, label: 'Raspberry Pi', title: 'Raspberry Pi processing', text: 'The Raspberry Pi runs the perception software and neural-network processing. Camera information and LiDAR measurements feed a shared picture of the surroundings to help select a maneuver.', category: '03 / ON-BOARD COMPUTING', labelX: 80, labelY: 39 },
+      { x: 65, y: 50, label: 'Steering + control', title: 'Steering and motor control', text: 'The steering servo changes wheel angle while motor control changes speed. Together, they turn the software’s chosen response into physical movement.', category: '04 / ACTUATION', labelX: 77, labelY: 56 }
     ]
   },
   {
-    src: 'assets/car-rear.jpg', alt: 'Rear-side view of the car showing the rear camera, LiDAR sensor, and Raspberry Pi', file: 'hardware / reverse-angle', caption: 'A different angle. The rear camera fills in the view behind the car.',
+    src: 'assets/car-rear.jpg', alt: 'Rear-side view of the car showing the rear camera, LiDAR sensor, and Raspberry Pi', file: 'hardware / reverse-angle', caption: 'Rear hardware view. Select a marker for component details.',
     hotspots: [
-      { x: 34, y: 19, label: 'Front camera', title: 'Keeping the forward view.', text: 'The forward camera captures the scene in front of the vehicle for the computer-vision pipeline.', category: '01 / CAMERA VISION', labelX: 23, labelY: 12 },
-      { x: 65, y: 35, label: 'LiDAR', title: 'Measuring the surroundings.', text: 'Distance sensing helps place nearby objects in space, complementing the visual context from the camera feeds.', category: '02 / DISTANCE SENSING', labelX: 79, labelY: 34 },
-      { x: 55, y: 48, label: 'Raspberry Pi', title: 'The on-board computer.', text: 'The Pi brings sensing and control software together on the vehicle, processing inputs before sending steering and motor commands.', category: '03 / ON-BOARD COMPUTING', labelX: 40, labelY: 52 },
-      { x: 76, y: 54, label: 'Rear camera', title: 'A second point of view.', text: 'The rear-facing camera adds visibility behind the vehicle. Together, the forward and rear feeds give the software more context than a single camera.', category: '04 / REAR VISIBILITY', labelX: 82, labelY: 61 }
+      { x: 34, y: 19, label: 'Front camera', title: 'Front camera', text: 'The forward camera captures the scene in front of the vehicle for the computer-vision pipeline.', category: '01 / CAMERA VISION', labelX: 23, labelY: 12 },
+      { x: 65, y: 35, label: 'LiDAR', title: 'LiDAR distance sensing', text: 'Distance sensing helps place nearby objects in space, complementing the visual context from the camera feeds.', category: '02 / DISTANCE SENSING', labelX: 79, labelY: 34 },
+      { x: 55, y: 48, label: 'Raspberry Pi', title: 'Raspberry Pi', text: 'The Pi brings sensing and control software together on the vehicle, processing inputs before sending steering and motor commands.', category: '03 / ON-BOARD COMPUTING', labelX: 40, labelY: 52 },
+      { x: 76, y: 54, label: 'Rear camera', title: 'Rear camera', text: 'The rear-facing camera adds visibility behind the vehicle. Together, the forward and rear feeds give the software more context than a single camera.', category: '04 / REAR VISIBILITY', labelX: 82, labelY: 61 }
     ]
   },
   {
     src: 'assets/car-dashboard.jpg', alt: 'Car software dashboard with front and rear camera feeds, a top-down distance map, and manual and autopilot controls', file: 'software / perception-dashboard', caption: 'Inside the dashboard: camera feeds, a distance map, and vehicle controls.',
     hotspots: [
-      { x: 24, y: 29, label: 'Live cameras', title: 'What the cameras see.', text: 'The front and rear video panels make it possible to inspect the camera inputs while testing the perception system.', category: '01 / VISUAL INPUT', labelX: 24, labelY: 36 },
-      { x: 69, y: 32, label: 'Distance map', title: 'A top-down view of space.', text: 'The top-down visualization plots distance readings around the car, helping make nearby objects and gaps easier to understand during testing.', category: '02 / SPATIAL VIEW', labelX: 76, labelY: 20 },
-      { x: 72, y: 67, label: 'Control panel', title: 'Test, observe, adjust.', text: 'The interface exposes autopilot and manual controls, so the software’s response can be compared with the live sensor views.', category: '03 / CONTROL INTERFACE', labelX: 77, labelY: 75 }
+      { x: 24, y: 29, label: 'Live cameras', title: 'Live camera feeds', text: 'The front and rear video panels make it possible to inspect the camera inputs while testing the perception system.', category: '01 / VISUAL INPUT', labelX: 24, labelY: 36 },
+      { x: 69, y: 32, label: 'Distance map', title: 'Distance map', text: 'The top-down visualization plots distance readings around the car, helping make nearby objects and gaps easier to understand during testing.', category: '02 / SPATIAL VIEW', labelX: 76, labelY: 20 },
+      { x: 72, y: 67, label: 'Control panel', title: 'Vehicle controls', text: 'The interface exposes autopilot and manual controls, so the software’s response can be compared with the live sensor views.', category: '03 / CONTROL INTERFACE', labelX: 77, labelY: 75 }
     ]
   },
   {
     src: 'assets/car-terminal.jpg', alt: 'The car perception software beside a terminal logging repeated emergency stops at short obstacle distances', file: 'software / live-testing', caption: 'Testing in real time. The terminal shows obstacle-distance and emergency-stop messages.',
     hotspots: [
-      { x: 43, y: 35, label: 'Perception view', title: 'Making the data visible.', text: 'Camera feeds and a top-down sensor map sit together in the software, helping me see how the perception system interprets the room.', category: '01 / SOFTWARE IN ACTION', labelX: 33, labelY: 42 },
-      { x: 82, y: 40, label: 'Live terminal', title: 'The feedback loop.', text: 'The terminal records behavior during live testing. In this photo, repeated emergency-stop messages report objects at short distances — useful feedback for tuning sensing and control.', category: '02 / LIVE DEBUGGING', labelX: 81, labelY: 50 }
+      { x: 43, y: 35, label: 'Perception view', title: 'Perception dashboard', text: 'Camera feeds and a top-down sensor map sit together in the software, helping me see how the perception system interprets the room.', category: '01 / SOFTWARE IN ACTION', labelX: 33, labelY: 42 },
+      { x: 82, y: 40, label: 'Live terminal', title: 'Terminal output', text: 'The terminal records behavior during live testing. In this photo, repeated emergency-stop messages report objects at short distances — useful feedback for tuning sensing and control.', category: '02 / LIVE DEBUGGING', labelX: 81, labelY: 50 }
     ]
   }
 ];
 
 const bulldogHotspots = [
-  { x: 59, y: 60, label: 'Find your next step', title: 'Start with a question.', text: 'The central search is a starting point for finding programs and opportunities. It puts discovery at the heart of the student hub.', category: '01 / OPPORTUNITY SEARCH', labelX: 59, labelY: 67 },
-  { x: 8, y: 29, label: 'College path', title: 'Explore the college path.', text: 'The college section brings together internships, scholarships, AP classes, college programs, and support for finding academic opportunities.', category: '02 / COLLEGE PATH', labelX: 18, labelY: 31 },
-  { x: 8, y: 56, label: 'Career path', title: 'There is more than one route.', text: 'Career exploration, job-search skills, and careers and training resources help students think about work alongside their academic plans.', category: '03 / CAREER PATH', labelX: 18, labelY: 58 },
-  { x: 8, y: 79, label: 'School resources', title: 'Keep the practical things close.', text: 'Guidance and academic-support links sit in the same hub. An “Anything Missing?” option gives students a way to flag gaps in the resources.', category: '04 / SCHOOL RESOURCES', labelX: 21, labelY: 84 }
+  { x: 59, y: 60, label: 'Search', title: 'Opportunity search', text: 'The search bar lets students look for programs and opportunities.', category: '01 / OPPORTUNITY SEARCH', labelX: 59, labelY: 67 },
+  { x: 8, y: 29, label: 'College path', title: 'College resources', text: 'The college section brings together internships, scholarships, AP classes, college programs, and support for finding academic opportunities.', category: '02 / COLLEGE PATH', labelX: 18, labelY: 31 },
+  { x: 8, y: 56, label: 'Career path', title: 'Career resources', text: 'Career exploration, job-search skills, and careers and training resources help students think about work alongside their academic plans.', category: '03 / CAREER PATH', labelX: 18, labelY: 58 },
+  { x: 8, y: 79, label: 'School resources', title: 'School resources', text: 'Guidance and academic-support links sit in the same hub. An “Anything Missing?” option gives students a way to flag gaps in the resources.', category: '04 / SCHOOL RESOURCES', labelX: 21, labelY: 84 }
 ];
 
 let activeSlide = 0;
@@ -233,8 +233,8 @@ document.querySelector('#copy-email').addEventListener('click', async () => {
   try {
     if (!navigator.clipboard?.writeText) throw new Error('Clipboard unavailable');
     await navigator.clipboard.writeText('ayansafe0627@gmail.com');
-    document.querySelector('#copy-email-label').textContent = 'Copied. Say hello!';
-    showToast('Email address copied. See you in the inbox.');
+    document.querySelector('#copy-email-label').textContent = 'Email copied';
+    showToast('Email address copied.');
     setTimeout(() => { document.querySelector('#copy-email-label').textContent = 'Copy email address'; }, 3500);
   } catch {
     showToast('Email: ayansafe0627@gmail.com');
