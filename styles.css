@@ -15,3 +15,9 @@
 @media(max-width:650px){.hero{grid-template-columns:minmax(0,1fr)}.hero h1{width:100%;max-width:100%;font-size:clamp(47px,15.5vw,85px)}.heading-star{right:2px;top:0;font-size:27px}.contact-copy h1{width:100%;font-size:clamp(39px,13vw,61px)}.contact-star{right:0;top:2px}}
 
 @media(max-width:650px){.hero h1>span:first-of-type,.contact-copy h1>span:first-of-type{white-space:nowrap}}
+
+/* PairLab uses the existing project viewer, markers, and mobile popup behavior. */
+.pairlab-stage{position:relative;isolation:isolate;background:#f7f8f7;aspect-ratio:1348/936}
+.pairlab-stage>img{width:100%;height:100%;object-fit:contain}
+.pairlab-stage .expand-image{z-index:3}
+@media(max-width:650px){.pairlab-stage .hotspot-label{display:none}.pairlab-stage .hotspot{width:26px;height:26px;font-size:11px}.pairlab-viewer .viewer-caption>.tiny-note{display:none}}

@@ -20,9 +20,11 @@ function route() {
     else link.removeAttribute('aria-current');
   });
   if (validName === 'projects') {
-    const project = hash.split('/')[1] === 'bulldog' ? 'bulldog' : 'car';
-    document.querySelector('#project-car').hidden = project !== 'car';
-    document.querySelector('#project-bulldog').hidden = project !== 'bulldog';
+    const requestedProject = hash.split('/')[1];
+    const project = ['car', 'bulldog', 'pairlab'].includes(requestedProject) ? requestedProject : 'car';
+    document.querySelectorAll('.project-content > article').forEach(panel => {
+      panel.hidden = panel.id !== `project-${project}`;
+    });
     document.querySelectorAll('[data-project-link]').forEach(link => {
       if (link.dataset.projectLink === project) link.setAttribute('aria-current', 'page');
       else link.removeAttribute('aria-current');
@@ -112,7 +114,7 @@ function makeHotspots(layer, items, popup, stage) {
 function closePopups(restoreFocus = false) {
   document.querySelectorAll('.hotspot-popup').forEach(popup => { popup.hidden = true; });
   document.querySelectorAll('.hotspot[aria-expanded=true]').forEach(button => button.setAttribute('aria-expanded', 'false'));
-  document.querySelectorAll('[data-tour]').forEach(button => button.setAttribute('aria-pressed', 'false'));
+  document.querySelectorAll('[data-tour], [data-pairlab-tour]').forEach(button => button.setAttribute('aria-pressed', 'false'));
   if (restoreFocus && lastHotspot?.isConnected) lastHotspot.focus({ preventScroll: true });
 }
 
@@ -196,8 +198,31 @@ document.querySelectorAll('[data-tour]').forEach(button => button.addEventListen
   button.setAttribute('aria-pressed', String(!wasOpen));
 }));
 
+
+// PairLab reuses the same numbered-marker and popup system as the other projects.
+const pairlabHotspots = [
+  { x: 41, y: 43, label: 'Asset pairs', title: 'Choose an asset pair', text: 'Compare familiar pairs such as Coca-Cola and Pepsi or Visa and Mastercard. Each example uses the same 2020–2024 daily price snapshot. Selecting a pair in the live app reruns the simulation.', category: '01 / ASSET PAIRS', labelX: 53, labelY: 45 },
+  { x: 11, y: 74, label: 'Trading rules', title: 'Set the trading rules', text: 'The formation period fits the relationship. The lookback and entry/exit thresholds determine when a trade is triggered. Costs, borrowing, and holding limits affect the simulated outcome. Change settings in the live app and run the backtest to compare.', category: '02 / STRATEGY SETTINGS', labelX: 18, labelY: 78 },
+  { x: 53, y: 65, label: 'Return and risk', title: 'Read the results', text: 'Net return shows the change in simulated account value after modeled costs. Sharpe summarizes return relative to variability, max drawdown is the largest decline from a previous peak, and win rate counts profitable trades. A high win rate can still produce an overall loss.', category: '03 / PERFORMANCE', labelX: 65, labelY: 68 },
+  { x: 35, y: 52, label: 'Research views', title: 'Inspect the evidence', text: 'The backtest view charts equity and the spread. Pair diagnostics examine the formation-period relationship; the trade log lists completed trades and costs. A relationship that looks correlated is not automatically a reliable mean-reverting pair.', category: '04 / RESEARCH VIEWS', labelX: 46, labelY: 55 }
+];
+makeHotspots(document.querySelector('#pairlab-hotspots'), pairlabHotspots, document.querySelector('#pairlab-popup'), document.querySelector('#pairlab-stage'));
+document.querySelectorAll('[data-pairlab-tour]').forEach(button => button.addEventListener('click', () => {
+  const index = Number(button.dataset.pairlabTour);
+  const hotspot = document.querySelector('#pairlab-hotspots').querySelectorAll('button')[index];
+  const wasOpen = hotspot.getAttribute('aria-expanded') === 'true';
+  showHotspot(hotspot, pairlabHotspots[index], document.querySelector('#pairlab-popup'), document.querySelector('#pairlab-stage'));
+  button.setAttribute('aria-pressed', String(!wasOpen));
+}));
+document.querySelector('#expand-pairlab').addEventListener('click', () => {
+  document.querySelector('#dialog-image').src = 'assets/pairlab-workbench.jpg';
+  document.querySelector('#dialog-image').alt = 'PairLab pairs trading research workbench';
+  document.querySelector('#dialog-caption').textContent = 'PairLab historical research workbench. Open the live app to adjust settings and run backtests.';
+  document.querySelector('#image-dialog').showModal();
+});
+
 document.addEventListener('click', event => {
-  if (!event.target.closest('.hotspot,.hotspot-popup,[data-tour]')) closePopups(false);
+  if (!event.target.closest('.hotspot,.hotspot-popup,[data-tour],[data-pairlab-tour]')) closePopups(false);
   const link = event.target.closest('a[href^="#"]');
   if (link && link.hash === window.location.hash && link.hash !== '#main-content') {
     event.preventDefault(); route();
