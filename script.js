@@ -21,7 +21,7 @@ function route() {
   });
   if (validName === 'projects') {
     const requestedProject = hash.split('/')[1];
-    const project = ['car', 'bulldog', 'pairlab'].includes(requestedProject) ? requestedProject : 'car';
+    const project = ['car', 'bulldog', 'pairlab', 'range'].includes(requestedProject) ? requestedProject : 'car';
     document.querySelectorAll('.project-content > article').forEach(panel => {
       panel.hidden = panel.id !== `project-${project}`;
     });
@@ -114,7 +114,7 @@ function makeHotspots(layer, items, popup, stage) {
 function closePopups(restoreFocus = false) {
   document.querySelectorAll('.hotspot-popup').forEach(popup => { popup.hidden = true; });
   document.querySelectorAll('.hotspot[aria-expanded=true]').forEach(button => button.setAttribute('aria-expanded', 'false'));
-  document.querySelectorAll('[data-tour], [data-pairlab-tour]').forEach(button => button.setAttribute('aria-pressed', 'false'));
+  document.querySelectorAll('[data-tour], [data-pairlab-tour], [data-range-tour]').forEach(button => button.setAttribute('aria-pressed', 'false'));
   if (restoreFocus && lastHotspot?.isConnected) lastHotspot.focus({ preventScroll: true });
 }
 
@@ -221,8 +221,30 @@ document.querySelector('#expand-pairlab').addEventListener('click', () => {
   document.querySelector('#image-dialog').showModal();
 });
 
+// Range shares the accessible project tour and image dialog behavior.
+const rangeHotspots = [
+  { x: 84, y: 28, label: 'Allocations', title: 'Build a portfolio', text: 'Choose the starting balance and weights for US equities, international equities, bonds, and gold. Presets offer starting points; normalize custom weights to 100%. The live app lets you edit return and volatility assumptions before running the simulation.', category: '01 / PORTFOLIO BUILDER', labelX: 78, labelY: 23 },
+  { x: 38, y: 12, label: 'Downside risk', title: 'Measure potential losses', text: 'At 95% confidence, VaR is the modeled loss cutoff exceeded by roughly 5% of outcomes. Expected shortfall averages losses in that worst tail. The loss probability reports how often the ending value falls below your chosen threshold. These metrics are not a maximum possible loss.', category: '02 / RISK METRICS', labelX: 46, labelY: 16 },
+  { x: 42, y: 45, label: 'Simulated paths', title: 'Explore possible trajectories', text: 'The live app generates 2,000 to 25,000 paths. The center line shows the median; the shaded band shows the 5th to 95th percentiles at each time step. Sample paths illustrate the variation. A fixed seed makes a run reproducible, and the shaded band is not a guarantee.', category: '03 / MONTE CARLO PATHS', labelX: 49, labelY: 49 },
+  { x: 19, y: 83, label: 'Return distribution', title: 'Inspect the worst tail', text: 'Each histogram bar counts simulated ending returns in a range. Amber bars identify the lower tail used for downside analysis. Pin a result to compare allocations, or download all simulated outcomes and their settings as a CSV from the live app.', category: '04 / OUTCOMES & COMPARISON', labelX: 28, labelY: 79 }
+];
+makeHotspots(document.querySelector('#range-hotspots'), rangeHotspots, document.querySelector('#range-popup'), document.querySelector('#range-stage'));
+document.querySelectorAll('[data-range-tour]').forEach(button => button.addEventListener('click', () => {
+  const index = Number(button.dataset.rangeTour);
+  const hotspot = document.querySelector('#range-hotspots').querySelectorAll('button')[index];
+  const wasOpen = hotspot.getAttribute('aria-expanded') === 'true';
+  showHotspot(hotspot, rangeHotspots[index], document.querySelector('#range-popup'), document.querySelector('#range-stage'));
+  button.setAttribute('aria-pressed', String(!wasOpen));
+}));
+document.querySelector('#expand-range').addEventListener('click', () => {
+  document.querySelector('#dialog-image').src = 'assets/range-workbench.jpg';
+  document.querySelector('#dialog-image').alt = 'Range Monte Carlo portfolio risk dashboard';
+  document.querySelector('#dialog-caption').textContent = 'Range portfolio risk simulator. Open the live app to adjust allocations, run simulations, and compare risk.';
+  document.querySelector('#image-dialog').showModal();
+});
+
 document.addEventListener('click', event => {
-  if (!event.target.closest('.hotspot,.hotspot-popup,[data-tour],[data-pairlab-tour]')) closePopups(false);
+  if (!event.target.closest('.hotspot,.hotspot-popup,[data-tour],[data-pairlab-tour],[data-range-tour]')) closePopups(false);
   const link = event.target.closest('a[href^="#"]');
   if (link && link.hash === window.location.hash && link.hash !== '#main-content') {
     event.preventDefault(); route();

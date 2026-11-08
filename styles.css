@@ -21,3 +21,9 @@
 .pairlab-stage>img{width:100%;height:100%;object-fit:contain}
 .pairlab-stage .expand-image{z-index:3}
 @media(max-width:650px){.pairlab-stage .hotspot-label{display:none}.pairlab-stage .hotspot{width:26px;height:26px;font-size:11px}.pairlab-viewer .viewer-caption>.tiny-note{display:none}}
+
+/* Range retains its own dashboard colors inside the shared project tour. */
+.range-stage{position:relative;isolation:isolate;background:#101216;aspect-ratio:1291/1183}
+.range-stage>img{width:100%;height:100%;object-fit:contain;display:block}
+.range-stage .expand-image{z-index:3}
+@media(max-width:650px){.range-stage .hotspot-label{display:none}.range-stage .hotspot{width:26px;height:26px;font-size:11px}.range-viewer .viewer-caption>.tiny-note{display:none}}
